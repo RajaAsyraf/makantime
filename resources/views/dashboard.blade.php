@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@section('additionalLibrary')
-<link rel="stylesheet" href="{{ asset('theme/modules/bootstrap-social/bootstrap-social.css') }}">
-<link rel="stylesheet" href="{{ asset('theme/modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
-<link rel="stylesheet" href="{{ asset('theme/modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
-@endsection
-
 @section('content')
 <section class="section">
     <div class="section-header">
@@ -44,70 +38,6 @@
                 <button class="btn btn-danger">Tak Nak!</button>
             </div>
         </div>
-        <div class="card card-danger">
-            <div class="card-header">
-            <h4>Siapa Join?</h4>
-            <div class="card-header-action">
-                <a href="#" class="btn btn-danger btn-icon icon-right">Meh Tengok <i class="fas fa-chevron-right"></i></a>
-            </div>
-            </div>
-            <div class="card-body">
-            <div class="owl-carousel owl-theme" id="users-carousel">
-                <div>
-                <div class="user-item">
-                    <img alt="image" src="{{ asset('theme/img/avatar/avatar-1.png') }}" class="img-fluid">
-                    <div class="user-details">
-                        <div class="user-name">Hafizzodin</div>
-                        <div class="text-job text-muted">Seat belakang kiri</div>
-                    </div>  
-                </div>
-                </div>
-                <div>
-                <div class="user-item">
-                    <img alt="image" src="{{ asset('theme/img/avatar/avatar-2.png') }}" class="img-fluid">
-                    <div class="user-details">
-                    <div class="user-name">Aizuddin</div>
-                    <div class="text-job text-muted">Seat depan kanan</div>
-                    </div>  
-                </div>
-                </div>
-                <div>
-                <div class="user-item">
-                    <img alt="image" src="{{ asset('theme/img/avatar/avatar-3.png') }}" class="img-fluid">
-                    <div class="user-details">
-                    <div class="user-name">Khairul</div>
-                    <div class="text-job text-muted">Seat depan kiri</div>
-                    </div>  
-                </div>
-                </div>
-                <div>
-                <div class="user-item">
-                    <img alt="image" src="{{ asset('theme/img/avatar/avatar-4.png') }}" class="img-fluid">
-                    <div class="user-details">
-                    <div class="user-name">Asyraf</div>
-                    <div class="text-job text-muted">Seat belakang kanan</div>
-                    </div>  
-                </div>
-                </div>
-                <div>
-                <div class="user-item">
-                    <img alt="image" src="{{ asset('theme/img/avatar/avatar-5.png') }}" class="img-fluid">
-                    <div class="user-details">
-                    <div class="user-name">Zul Azfar</div>
-                    <div class="text-job text-muted">Seat belakang tengah</div>
-                    </div>  
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
     </div>
 </section>
-@endsection
-
-@section('additionalScripts')
-<!-- JS Libraies -->
-<script src="{{ asset('theme/modules/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
-<!-- Page Specific JS File -->
-<script src="{{ asset('theme/js/page/components-user.js') }}"></script>
 @endsection
