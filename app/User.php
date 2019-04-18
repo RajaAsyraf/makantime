@@ -36,4 +36,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * One-to-many relationship with App\Invitation.
+     *
+     * @return App\Invitation
+     */
+    public function invitations()
+    {
+        return $this->hasMany('App\Invitation');
+    }
+
+    /**
+     * Many-to-many relationship with App\Group via pivot table group_user.
+     *
+     * @return App\Group
+     */
+    public function groups()
+    {
+        return $this->belongsToMany('App\Group');
+    }
 }

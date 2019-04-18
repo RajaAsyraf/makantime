@@ -3,7 +3,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Makan mana?</h1>
+        <h1>Weh {{ $invitation->user->name }}, makan mana?</h1>
     </div>
 
     <div class="section-body">
@@ -11,7 +11,7 @@
         <p class="section-lead">Kalau nak join makan, tekan la 'Jom' button tu.</p>
         <div class="card">
             <div class="card-header">
-                <h4>BBNU</h4>
+                <h4>{{ $invitation->group->name }}</h4>
             </div>
             <div class="card-body">
                 <h3>Warung Ambo</h3>

@@ -12,6 +12,7 @@
 */
 
 Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+Route::get('/invitation/{token}', ['as' => 'dashboard.invitation', 'uses' => 'DashboardController@getInvitation']);
 
 Auth::routes();
 
