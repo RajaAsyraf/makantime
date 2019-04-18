@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-});
+Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
+});
