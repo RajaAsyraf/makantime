@@ -7,6 +7,8 @@
 <script src="{{ asset('theme/modules/moment.min.js') }}"></script>
 <script src="{{ asset('theme/js/stisla.js') }}"></script>
 
+@yield('additionalScripts')
+
 <!-- Template JS File -->
 <script src="{{ asset('theme/js/scripts.js') }}"></script>
 <script src="{{ asset('theme/js/custom.js') }}"></script>

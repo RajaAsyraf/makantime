@@ -1,35 +1,113 @@
 @extends('layouts.app')
 
+@section('additionalLibrary')
+<link rel="stylesheet" href="{{ asset('theme/modules/bootstrap-social/bootstrap-social.css') }}">
+<link rel="stylesheet" href="{{ asset('theme/modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
+<link rel="stylesheet" href="{{ asset('theme/modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
+@endsection
+
 @section('content')
 <section class="section">
     <div class="section-header">
-    <h1>Top Navigation</h1>
-    <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-        <div class="breadcrumb-item"><a href="#">Layout</a></div>
-        <div class="breadcrumb-item">Top Navigation</div>
-    </div>
+        <h1>Makan mana?</h1>
     </div>
 
     <div class="section-body">
-    <h2 class="section-title">This is Example Page</h2>
-    <p class="section-lead">This page is just an example for you to create your own page.</p>
-    <div class="card">
-        <div class="card-header">
-        <h4>Example Card</h4>
+        <h2 class="section-title">Jangan cakap kita orang tak ajak!</h2>
+        <p class="section-lead">Kalau nak join makan, tekan la 'Jom' button tu.</p>
+        <div class="card">
+            <div class="card-header">
+                <h4>BBNU</h4>
+            </div>
+            <div class="card-body">
+                <h3>Warung Ambo</h3>
+                <span class="badge badge-secondary">Esok, 12:00 tengah hari</span>
+                <hr></hr>
+                <h6>Kereta kosong</h6>
+                <div class="buttons">
+                    <button type="button" class="btn btn-primary btn-icon icon-left" disabled>
+                        <i class="fas fa-car"></i> Myvi Din <span class="badge badge-transparent">0</span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-icon icon-left">
+                        <i class="fas fa-car"></i> Myvi Khairul <span class="badge badge-transparent">2</span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-icon icon-left">
+                        <i class="fas fa-car"></i> Persona Syahran <span class="badge badge-transparent">4</span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-icon icon-left">
+                        <i class="fas fa-car"></i> Vios Rizaini <span class="badge badge-transparent">2</span>
+                    </button>
+                </div>
+            </div>
+            <div class="card-footer bg-whitesmoke">
+                <button class="btn btn-success">Jom</button>
+                <button class="btn btn-danger">Tak Nak!</button>
+            </div>
         </div>
-        <div class="card-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <div class="card card-danger">
+            <div class="card-header">
+            <h4>Siapa Join?</h4>
+            <div class="card-header-action">
+                <a href="#" class="btn btn-danger btn-icon icon-right">Meh Tengok <i class="fas fa-chevron-right"></i></a>
+            </div>
+            </div>
+            <div class="card-body">
+            <div class="owl-carousel owl-theme" id="users-carousel">
+                <div>
+                <div class="user-item">
+                    <img alt="image" src="{{ asset('theme/img/avatar/avatar-1.png') }}" class="img-fluid">
+                    <div class="user-details">
+                        <div class="user-name">Hafizzodin</div>
+                        <div class="text-job text-muted">Seat belakang kiri</div>
+                    </div>  
+                </div>
+                </div>
+                <div>
+                <div class="user-item">
+                    <img alt="image" src="{{ asset('theme/img/avatar/avatar-2.png') }}" class="img-fluid">
+                    <div class="user-details">
+                    <div class="user-name">Aizuddin</div>
+                    <div class="text-job text-muted">Seat depan kanan</div>
+                    </div>  
+                </div>
+                </div>
+                <div>
+                <div class="user-item">
+                    <img alt="image" src="{{ asset('theme/img/avatar/avatar-3.png') }}" class="img-fluid">
+                    <div class="user-details">
+                    <div class="user-name">Khairul</div>
+                    <div class="text-job text-muted">Seat depan kiri</div>
+                    </div>  
+                </div>
+                </div>
+                <div>
+                <div class="user-item">
+                    <img alt="image" src="{{ asset('theme/img/avatar/avatar-4.png') }}" class="img-fluid">
+                    <div class="user-details">
+                    <div class="user-name">Asyraf</div>
+                    <div class="text-job text-muted">Seat belakang kanan</div>
+                    </div>  
+                </div>
+                </div>
+                <div>
+                <div class="user-item">
+                    <img alt="image" src="{{ asset('theme/img/avatar/avatar-5.png') }}" class="img-fluid">
+                    <div class="user-details">
+                    <div class="user-name">Zul Azfar</div>
+                    <div class="text-job text-muted">Seat belakang tengah</div>
+                    </div>  
+                </div>
+                </div>
+            </div>
+            </div>
         </div>
-        <div class="card-footer bg-whitesmoke">
-        This is card footer
-        </div>
-    </div>
     </div>
 </section>
+@endsection
+
+@section('additionalScripts')
+<!-- JS Libraies -->
+<script src="{{ asset('theme/modules/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
+<!-- Page Specific JS File -->
+<script src="{{ asset('theme/js/page/components-user.js') }}"></script>
 @endsection

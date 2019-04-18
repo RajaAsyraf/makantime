@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="{{ asset('theme/modules/fontawesome/css/all.min.css') }}">
 
   <!-- CSS Libraries -->
+  @yield('additionalLibrary')
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('theme/css/style.css') }}">
