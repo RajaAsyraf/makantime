@@ -16,6 +16,9 @@
             <div class="card-body">
                 <h3>Warung Ambo</h3>
                 <span class="badge badge-secondary">Esok, 12:00 tengah hari</span>
+                @if($invitation->is_going)
+                    <span class="badge badge-success float-right">Ikut</span>
+                @endif
                 <hr></hr>
                 <h6>Kereta kosong</h6>
                 <div class="buttons">
@@ -34,8 +37,16 @@
                 </div>
             </div>
             <div class="card-footer bg-whitesmoke">
-                <button class="btn btn-success">Jom</button>
-                <button class="btn btn-danger">Tak Nak!</button>
+                @if($invitation->is_going)
+                    <button class="btn btn-success" disabled>Jom</button>
+                    <button class="btn btn-danger" disabled>Tak Nak!</button>
+                @else
+                    <form action="{{ route('dashboard.invitation.response', $invitation->token) }}" method="POST">
+                        @csrf
+                        <input type="submit" class="btn btn-success" name="invitation_response" value="Jom">
+                        <input type="submit" class="btn btn-danger" name="invitation_response" value="Tak Nak!">
+                    </form>
+                @endif
             </div>
         </div>
     </div>

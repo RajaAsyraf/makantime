@@ -30,4 +30,27 @@ class DashboardController extends Controller
         $invitation = Invitation::where('token', $token)->with('user', 'group')->first();   
         return view('dashboard', compact('invitation'));
     }
+    
+    /**
+     * Set invitation response
+     * 
+     * @param Request $request
+     * @param string $token
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function setInvitation(Request $request, $token)
+    {
+        $input = $request->input();
+        $invitationResponse = $input['invitation_response'];
+        $isGoing = false;
+        if ($invitationResponse == "Jom") {
+            $isGoing = true;
+        }
+        $invitation = Invitation::where('token', $token)->with('user', 'group')->first();
+        $invitation->is_going = $isGoing;
+        $invitation->save();
+
+        return view('dashboard', compact('invitation'));
+    }
 }

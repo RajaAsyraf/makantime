@@ -12,7 +12,8 @@
 */
 
 Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
-Route::get('/invitation/{token}', ['as' => 'dashboard.invitation', 'uses' => 'DashboardController@getInvitation']);
+Route::get('/invitation/{token}', ['as' => 'dashboard.invitation.request', 'uses' => 'DashboardController@getInvitation']);
+Route::post('/invitation/{token}', ['as' => 'dashboard.invitation.response', 'uses' => 'DashboardController@setInvitation']);
 
 Auth::routes();
 
