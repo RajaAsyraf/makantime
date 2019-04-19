@@ -12,7 +12,7 @@ class Invitation extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'token', 'is_going', 'response_at'
+        'user_id', 'token', 'is_going', 'restaurant_id', 'response_at'
     ];
 
     /**
@@ -33,5 +33,15 @@ class Invitation extends Model
     public function group()
     {
         return $this->belongsTo('App\Group');
+    }
+
+    /**
+     * One-to-many relationship with App\Restaurant.
+     *
+     * @return App\Restaurant
+     */
+    public function restaurant()
+    {
+        return $this->belongsTo('App\Restaurant');
     }
 }

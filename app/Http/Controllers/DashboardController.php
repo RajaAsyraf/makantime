@@ -28,7 +28,7 @@ class DashboardController extends Controller
      */
     public function getInvitation($token)
     {
-        $invitations = Invitation::where('token', $token)->with('user', 'group')->get();   
+        $invitations = Invitation::where('token', $token)->with('user', 'group', 'restaurant')->get();   
         return view('dashboard', compact('invitations'));
     }
     

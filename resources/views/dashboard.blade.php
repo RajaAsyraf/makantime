@@ -15,7 +15,7 @@
                     <h4>{{ $invitation->group->name }}</h4>
                 </div>
                 <div class="card-body">
-                    <h3>Warung Ambo</h3>
+                    <h3>{{ $invitation->restaurant->name }}</h3>
                     <span class="badge badge-secondary">Esok, 12:00 tengah hari</span>
                     @if($invitation->is_going)
                         <span class="badge badge-success float-right">Ikut</span>
