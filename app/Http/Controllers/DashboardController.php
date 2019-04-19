@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Invitation;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -27,8 +28,8 @@ class DashboardController extends Controller
      */
     public function getInvitation($token)
     {
-        $invitation = Invitation::where('token', $token)->with('user', 'group')->first();   
-        return view('dashboard', compact('invitation'));
+        $invitations = Invitation::where('token', $token)->with('user', 'group')->get();   
+        return view('dashboard', compact('invitations'));
     }
     
     /**
@@ -39,18 +40,17 @@ class DashboardController extends Controller
      * 
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function setInvitation(Request $request, $token)
+    public function setInvitation(Request $request, Invitation $invitation)
     {
-        $input = $request->input();
-        $invitationResponse = $input['invitation_response'];
+        $invitationResponse = $request->input('invitation_response');
         $isGoing = false;
         if ($invitationResponse == "Jom") {
             $isGoing = true;
         }
-        $invitation = Invitation::where('token', $token)->with('user', 'group')->first();
         $invitation->is_going = $isGoing;
+        $invitation->response_at = Carbon::now();
         $invitation->save();
 
-        return view('dashboard', compact('invitation'));
+        return redirect()->route('dashboard.invitation.index', $request->input('token'));
     }
 }
