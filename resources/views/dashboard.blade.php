@@ -13,15 +13,15 @@
             <div class="card">
                 <div class="card-header">
                     <h4>{{ $invitation->group->name }}</h4>
-                </div>
-                <div class="card-body">
-                    <h3>{{ $invitation->restaurant->name }}</h3>
-                    <span class="badge badge-secondary">Esok, 12:00 tengah hari</span>
                     @if($invitation->is_going)
                         <span class="badge badge-success float-right">Ikut</span>
                     @elseif(!$invitation->is_going && $invitation->response_at)
                         <span class="badge badge-danger float-right">Tak Ikut</span>
                     @endif
+                </div>
+                <div class="card-body">
+                    <h3>{{ $invitation->restaurant->name }}</h3>
+                    <span class="badge badge-secondary">{{ $invitation->appointment_at->locale('ms_MY')->isoFormat('hh:mm A | dddd, DD MMM') }}</span>
                     <hr></hr>
                     <h6>Kereta kosong</h6>
                     <div class="buttons">

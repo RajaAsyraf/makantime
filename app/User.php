@@ -38,6 +38,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at', 'updated_at'
+    ];
+
+    /**
      * One-to-many relationship with App\Invitation.
      *
      * @return App\Invitation
