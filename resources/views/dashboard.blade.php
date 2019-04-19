@@ -10,14 +10,20 @@
         <h2 class="section-title">Jangan cakap kita orang tak ajak!</h2>
         <p class="section-lead">Kalau nak join makan, tekan la 'Jom' button tu.</p>
         @foreach ($invitations as $invitation)
-            <div class="card">
+            @if($invitation->is_going)
+                <div class="card card-success">
+            @elseif(!$invitation->is_going && $invitation->response_at)
+                <div class="card card-danger">
+            @else
+                <div class="card">
+            @endif
                 <div class="card-header">
-                    <h4>{{ $invitation->group->name }}</h4>
                     @if($invitation->is_going)
                         <span class="badge badge-success float-right">Ikut</span>
                     @elseif(!$invitation->is_going && $invitation->response_at)
                         <span class="badge badge-danger float-right">Tak Ikut</span>
                     @endif
+                    &nbsp;<h4>{{ $invitation->group->name }}</h4>
                 </div>
                 <div class="card-body">
                     <h3>{{ $invitation->restaurant->name }}</h3>
