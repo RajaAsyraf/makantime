@@ -25,13 +25,13 @@ class Invitation extends Model
     ];
 
     /**
-     * One-to-many relationship with App\User.
+     * Many-to-many relationship with App\User.
      *
      * @return App\User
      */
-    public function user()
+    public function users()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsToMany('App\User')->as('response')->withPivot('is_going', 'response_at')->withTimestamps();;
     }
 
     /**

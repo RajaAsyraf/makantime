@@ -3,7 +3,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Weh {{ $invitations[0]->user->name }}, makan mana?</h1>
+        <h1>Weh {{ $user->name }}, makan mana?</h1>
     </div>
 
     <div class="section-body">
@@ -31,7 +31,7 @@
                     <hr></hr>
                     <h6>Kereta kosong</h6>
                     <div class="buttons">
-                        <button type="button" class="btn btn-primary btn-icon icon-left" disabled>
+                        <button type="button" class="btn btn-primary btn-icon icon-left">
                             <i class="fas fa-car"></i> Myvi Din <span class="badge badge-transparent">0</span>
                         </button>
                         <button type="button" class="btn btn-primary btn-icon icon-left">

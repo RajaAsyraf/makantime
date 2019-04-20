@@ -47,13 +47,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * One-to-many relationship with App\Invitation.
+     * Many-to-many relationship with App\Invitation.
      *
      * @return App\Invitation
      */
     public function invitations()
     {
-        return $this->hasMany('App\Invitation');
+        return $this->belongsToMany('App\Invitation')->as('response')->withPivot('is_going', 'response_at')->withTimestamps();;
     }
 
     /**

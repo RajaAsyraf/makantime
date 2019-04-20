@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Invitation;
+use App\User;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -15,8 +16,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $token = 'acaphaha';
-        return $this->getInvitation($token);
+        $userId = 1;
+        return $this->getInvitation($userId);
     }
 
     /**
@@ -26,10 +27,11 @@ class DashboardController extends Controller
      * 
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function getInvitation($token)
+    public function getInvitation(User $user)
     {
-        $invitations = Invitation::where('token', $token)->with('user', 'group', 'restaurant')->get();   
-        return view('dashboard', compact('invitations'));
+        $invitations = $user->invitations()->get();
+
+        return view('dashboard', compact('user', 'invitations'));
     }
     
     /**
