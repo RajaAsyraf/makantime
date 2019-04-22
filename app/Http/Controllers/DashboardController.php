@@ -30,7 +30,7 @@ class DashboardController extends Controller
     public function getInvitation(User $user)
     {
         $invitationResponses = $user->invitationReponses()->with('invitation')->get();
-
+        
         return view('dashboard', compact('user', 'invitationResponses'));
     }
     

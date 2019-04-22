@@ -29,7 +29,25 @@
                     <h3>{{ $invitationResponse->invitation->restaurant->name }}</h3>
                     <span class="badge badge-secondary">{{ $invitationResponse->invitation->appointment_at->locale('ms_MY')->isoFormat('hh:mm A | dddd, DD MMM') }}</span>
                     <hr></hr>
-                    <h6>Kereta kosong</h6>
+                    <p>
+                        <h6>Siapa join?</h6>
+                        @if(count($usersGoing = $invitationResponse->invitation->usersInvited->where('is_going', true)) > 0)
+                            @foreach($usersGoing as $userGoing)
+                                <span class="badge badge-light">{{ $userGoing->user->name }}</span>
+                            @endforeach
+                        @else
+                            Tak ada orang join lagi ni bro. Come on!   
+                        @endif
+                    </p>
+                    @if(count($usersNotGoing = $invitationResponse->invitation->usersInvited->where('is_going', false)) > 0)
+                        <p>
+                            <h6>Dah ajak</h6>
+                            @foreach($usersNotGoing as $userNotGoing)
+                                <span class="badge badge-light">{{ $userNotGoing->user->name }}</span>
+                            @endforeach
+                        </p>
+                    @endif
+                    <!-- <h6>Kereta kosong</h6>
                     <div class="buttons">
                         <button type="button" class="btn btn-primary btn-icon icon-left">
                             <i class="fas fa-car"></i> Myvi Din <span class="badge badge-transparent">0</span>
@@ -43,7 +61,7 @@
                         <button type="button" class="btn btn-primary btn-icon icon-left">
                             <i class="fas fa-car"></i> Vios Rizaini <span class="badge badge-transparent">2</span>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
                 @if(!$invitationResponse->response_at)
                     <div class="card-footer bg-whitesmoke">
