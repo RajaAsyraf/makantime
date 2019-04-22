@@ -30,7 +30,7 @@
                     <span class="badge badge-secondary">{{ $invitationResponse->invitation->appointment_at->locale('ms_MY')->isoFormat('hh:mm A | dddd, DD MMM') }}</span>
                     <hr></hr>
                     <p>
-                        <h6>Siapa join?</h6>
+                        <h6>Siapa ikut?</h6>
                         @if(count($usersGoing = $invitationResponse->invitation->usersInvited->where('is_going', true)) > 0)
                             @foreach($usersGoing as $userGoing)
                                 <span class="badge badge-light">{{ $userGoing->user->name }}</span>
@@ -39,11 +39,19 @@
                             Tak ada orang join lagi ni bro. Come on!   
                         @endif
                     </p>
-                    @if(count($usersNotGoing = $invitationResponse->invitation->usersInvited->where('is_going', false)) > 0)
+                    @if(count($usersNotGoing = $invitationResponse->invitation->usersInvited->where('is_going', false)->where('response_at', '!=',NULL)) > 0)
                         <p>
-                            <h6>Dah ajak</h6>
+                            <h6>Tak nak ikut!</h6>
                             @foreach($usersNotGoing as $userNotGoing)
                                 <span class="badge badge-light">{{ $userNotGoing->user->name }}</span>
+                            @endforeach
+                        </p>
+                    @endif
+                    @if(count($usersNotResponse = $invitationResponse->invitation->usersInvited->where('response_at', NULL)) > 0)
+                        <p>
+                            <h6>Dah ajak</h6>
+                            @foreach($usersNotResponse as $userNotResponse)
+                                <span class="badge badge-light">{{ $userNotResponse->user->name }}</span>
                             @endforeach
                         </p>
                     @endif
