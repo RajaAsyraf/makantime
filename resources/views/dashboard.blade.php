@@ -9,25 +9,25 @@
     <div class="section-body">
         <h2 class="section-title">Jangan cakap kita orang tak ajak!</h2>
         <p class="section-lead">Kalau nak join makan, tekan la 'Jom' button tu.</p>
-        @foreach ($invitations as $invitation)
-            @if($invitation->is_going)
+        @foreach ($invitationResponses as $invitationResponse)
+            @if($invitationResponse->is_going)
                 <div class="card card-success">
-            @elseif(!$invitation->is_going && $invitation->response_at)
+            @elseif(!$invitationResponse->is_going && $invitationResponse->response_at)
                 <div class="card card-danger">
             @else
                 <div class="card">
             @endif
                 <div class="card-header">
-                    @if($invitation->is_going)
+                    @if($invitationResponse->is_going)
                         <span class="badge badge-success float-right">Ikut</span>
-                    @elseif(!$invitation->is_going && $invitation->response_at)
+                    @elseif(!$invitationResponse->is_going && $invitationResponse->response_at)
                         <span class="badge badge-danger float-right">Tak Ikut</span>
                     @endif
-                    &nbsp;<h4>{{ $invitation->group->name }}</h4>
+                    &nbsp;<h4>{{ $invitationResponse->invitation->group->name }}</h4>
                 </div>
                 <div class="card-body">
-                    <h3>{{ $invitation->restaurant->name }}</h3>
-                    <span class="badge badge-secondary">{{ $invitation->appointment_at->locale('ms_MY')->isoFormat('hh:mm A | dddd, DD MMM') }}</span>
+                    <h3>{{ $invitationResponse->invitation->restaurant->name }}</h3>
+                    <span class="badge badge-secondary">{{ $invitationResponse->invitation->appointment_at->locale('ms_MY')->isoFormat('hh:mm A | dddd, DD MMM') }}</span>
                     <hr></hr>
                     <h6>Kereta kosong</h6>
                     <div class="buttons">
@@ -45,13 +45,13 @@
                         </button>
                     </div>
                 </div>
-                @if(!$invitation->response_at)
+                @if(!$invitationResponse->response_at)
                     <div class="card-footer bg-whitesmoke">
-                        <form action="{{ route('dashboard.invitation.response', $invitation->id) }}" method="POST">
+                        <form action="{{ route('dashboard.invitation.response', $invitationResponse->invitation->id) }}" method="POST">
                             @csrf
-                            <input type="hidden" name="token" value="{{ $invitation->token }}">
-                            <input type="submit" class="btn btn-success" name="invitation_response" value="Jom">
-                            <input type="submit" class="btn btn-danger" name="invitation_response" value="Tak Nak!">
+                            <input type="hidden" name="user_id" value="{{ $user->id }}">
+                            <input type="submit" class="btn btn-success" name="invitation_answer" value="Jom">
+                            <input type="submit" class="btn btn-danger" name="invitation_answer" value="Tak Nak!">
                         </form>
                     </div>
                 @endif

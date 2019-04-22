@@ -29,9 +29,9 @@ class DashboardController extends Controller
      */
     public function getInvitation(User $user)
     {
-        $invitations = $user->invitations()->get();
+        $invitationResponses = $user->invitationReponses()->with('invitation')->get();
 
-        return view('dashboard', compact('user', 'invitations'));
+        return view('dashboard', compact('user', 'invitationResponses'));
     }
     
     /**
@@ -44,15 +44,18 @@ class DashboardController extends Controller
      */
     public function setInvitation(Request $request, Invitation $invitation)
     {
-        $invitationResponse = $request->input('invitation_response');
+        $invitationAnswer = $request->input('invitation_answer');
+        $userId = $request->input('user_id');
         $isGoing = false;
-        if ($invitationResponse == "Jom") {
+        if ($invitationAnswer == "Jom") {
             $isGoing = true;
         }
-        $invitation->is_going = $isGoing;
-        $invitation->response_at = Carbon::now();
-        $invitation->save();
+        
+        $invitationResponse = $invitation->usersInvited()->where('user_id', $userId)->first();
+        $invitationResponse->is_going = $isGoing;
+        $invitationResponse->response_at = Carbon::now();
+        $invitationResponse->save();
 
-        return redirect()->route('dashboard.invitation.index', $request->input('token'));
+        return redirect()->route('dashboard.invitation.index', $userId);
     }
 }

@@ -12,7 +12,7 @@ class Invitation extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'token', 'is_going', 'restaurant_id', 'response_at', 'appointment_at'
+        'group_id', 'restaurant_id'
     ];
 
     /**
@@ -25,13 +25,13 @@ class Invitation extends Model
     ];
 
     /**
-     * Many-to-many relationship with App\User.
+     * Has-many relationship with App\InvitationUser as usersInvited.
      *
-     * @return App\User
+     * @return App\InvitationUser
      */
-    public function users()
+    public function usersInvited()
     {
-        return $this->belongsToMany('App\User')->as('response')->withPivot('is_going', 'response_at')->withTimestamps();;
+        return $this->hasMany('App\InvitationUser');
     }
 
     /**
