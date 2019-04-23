@@ -16,8 +16,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $userId = 1;
-        return $this->getInvitation($userId);
+        $user = User::find(1);
+        return $this->getInvitation($user);
     }
 
     /**
@@ -31,7 +31,7 @@ class DashboardController extends Controller
     {
         $invitationResponses = $user->invitationReponses()->with('invitation')->get();
         
-        return view('dashboard', compact('user', 'invitationResponses'));
+        return view('invitation.index', compact('user', 'invitationResponses'));
     }
     
     /**

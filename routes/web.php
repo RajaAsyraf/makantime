@@ -18,5 +18,6 @@ Route::post('/invitation/{invitation}', ['as' => 'dashboard.invitation.response'
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/create/invitation', ['as' => 'invitation.create', 'uses' => 'InvitationController@create']);
     Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
 });
