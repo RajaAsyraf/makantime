@@ -36,4 +36,33 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at', 'updated_at'
+    ];
+
+    /**
+     * Has-many relationship with App\InvitationUser as invitationResponses.
+     *
+     * @return App\InvitationUser
+     */
+    public function invitationReponses()
+    {
+        return $this->hasMany('App\InvitationUser');
+    }
+
+    /**
+     * Many-to-many relationship with App\Group via pivot table group_user.
+     *
+     * @return App\Group
+     */
+    public function groups()
+    {
+        return $this->belongsToMany('App\Group');
+    }
 }

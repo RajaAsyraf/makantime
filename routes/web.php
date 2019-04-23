@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+Route::get('/invitation/{user}', ['as' => 'dashboard.invitation.index', 'uses' => 'DashboardController@getInvitation']);
+Route::post('/invitation/{invitation}', ['as' => 'dashboard.invitation.response', 'uses' => 'DashboardController@setInvitation']);
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
+});

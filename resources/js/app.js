@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import 'jquery.nicescroll';
 
 window.Vue = require('vue');
 
