@@ -195,10 +195,11 @@
             </div>
         </li> -->
         @guest
-        <div class="buttons">
-            <a href="{{ route('login') }}" class="btn btn-info">Login</a>
-            <a href="{{ route('register') }}" class="btn btn-info">Register</a>
-        </div>
+       <ul class="navbar-nav navbar-right">
+          <li class="dropdown dropdown-list-toggle">
+              <a href="{{ route('login') }}" class="nav-link nav-link-lg"><i class="fas fa-sign-in-alt"></i>&nbsp;Login</a>
+          </li>
+        </ul>
         @endguest
         @auth
         <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
