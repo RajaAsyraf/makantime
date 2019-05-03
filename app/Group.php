@@ -34,4 +34,14 @@ class Group extends Model
     {
         return $this->belongsToMany('App\Restaurant');
     }
+
+    /**
+     * Return all group admins
+     * 
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function getAdmins()
+    {
+        return $this->groupUsers()->where('is_admin', true);
+    }
 }

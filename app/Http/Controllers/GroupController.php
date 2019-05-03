@@ -59,4 +59,24 @@ class GroupController extends Controller
 
         return redirect()->route('group.index');
     }
+
+    /**
+     * Display selected group page
+     * 
+     * @param Group $group
+     * 
+     * @return view
+     */
+    public function view(Group $group)
+    {
+        $isGroupAdmin = false;
+        $groupAdmins = $group->getAdmins()->get();
+        foreach ($groupAdmins as $groupAdmin) {
+            if ($groupAdmin->user_id == Auth::user()->id) {
+                $isGroupAdmin = true;
+            }
+        }
+
+        return view('group.view', compact('group', 'isGroupAdmin'));
+    }
 }

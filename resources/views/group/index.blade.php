@@ -3,7 +3,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Geng makan lunch!</h1>
+        <h1>Geng Makan</h1>
     </div>
 
     <div class="section-body">
@@ -24,7 +24,7 @@
                     <tbody>
                         @foreach($groupUsers as $groupUser)
                         <tr>
-                            <td>{{ $groupUser->group->name }}</td>
+                            <td><a href="{{ route('group.view', ['group' => $groupUser->group->id]) }}">{{ $groupUser->group->name }}</a></td>
                             @if($groupUser->is_admin)
                             <td><span class="badge badge-pill badge-primary">Admin</span></td>
                             @else
