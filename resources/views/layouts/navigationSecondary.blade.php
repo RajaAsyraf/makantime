@@ -8,6 +8,9 @@
             <li class="nav-item {{ Request::route()->getName() == 'invitation.create' ? 'active' : '' }}">
                 <a href="{{ route('invitation.create') }}" class="nav-link"><i class="fas fa-fire"></i><span>Ajak Orang</span></a>
             </li>
+            <li class="nav-item {{ Request::route()->getName() == 'group.index' ? 'active' : '' }}">
+                <a href="{{ route('group.index') }}" class="nav-link"><i class="fas fa-fire"></i><span>Geng Makan</span></a>
+            </li>
             @endauth
         </ul>
     </div>
