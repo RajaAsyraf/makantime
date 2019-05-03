@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Group;
 use App\GroupUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
@@ -38,19 +39,23 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: add validation to only receive unique group name
-        // TODO: enable to rollback db if any error
-        $input = $request->input();
-        $group = Group::create([
-            'name' => $input['name'],
-            'created_by' => Auth::user()->id,
+        // validate request input
+        $validatedData = $request->validate([
+            'name' => 'required|unique:groups|max:50',
         ]);
-        $groupUser = GroupUser::create([
-            'group_id' => $group->id,
-            'user_id' => Auth::user()->id,
-            'is_admin' => true
-        ]);
-        // TODO: response with notification for the request status
+
+        DB::transaction(function () use ($validatedData) {
+            $group = Group::create([
+                'name' => $validatedData['name'],
+                'created_by' => Auth::user()->id,
+            ]);
+            $groupUser = GroupUser::create([
+                'group_id' => $group->id,
+                'user_id' => Auth::user()->id,
+                'is_admin' => true
+            ]);
+        });
+        // TODO: send response with notification for the request status
 
         return redirect()->route('group.index');
     }
