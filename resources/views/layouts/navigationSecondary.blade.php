@@ -1,8 +1,8 @@
 <nav class="navbar navbar-secondary navbar-expand-lg">
     <div class="container">
         <ul class="navbar-nav">
-            <li class="nav-item {{ Request::route()->getName() == 'dashboard' ? 'active' : '' }}">
-                <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-fire"></i><span>Orang Ajak</span></a>
+            <li class="nav-item {{ Request::route()->getName() == 'invitation.show' ? 'active' : '' }}">
+                <a href="{{ route('invitation.show') }}" class="nav-link"><i class="fas fa-fire"></i><span>Orang Ajak</span></a>
             </li>
             @auth
             <li class="nav-item {{ Request::route()->getName() == 'invitation.create' ? 'active' : '' }}">

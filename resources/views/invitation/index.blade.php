@@ -3,7 +3,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Weh {{ $user->name }}, makan mana?</h1>
+        <h1>Weh {{ Auth::user()->name }}, makan mana?</h1>
     </div>
 
     <div class="section-body">
@@ -73,9 +73,9 @@
                 </div>
                 @if(!$invitationResponse->response_at)
                     <div class="card-footer bg-whitesmoke">
-                        <form action="{{ route('dashboard.invitation.response', $invitationResponse->invitation->id) }}" method="POST">
+                        <form action="{{ route('invitation.storeResponse', $invitationResponse->invitation->id) }}" method="POST">
                             @csrf
-                            <input type="hidden" name="user_id" value="{{ $user->id }}">
+                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                             <input type="submit" class="btn btn-success" name="invitation_answer" value="Jom">
                             <input type="submit" class="btn btn-danger" name="invitation_answer" value="Tak Nak!">
                         </form>

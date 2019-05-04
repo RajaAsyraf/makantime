@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg main-navbar">
-    <a href="{{ route('dashboard')}}" class="navbar-brand sidebar-gone-hide">{{ config('app.name', 'MakanTime') }}</a>
+    <a href="{{ route('home')}}" class="navbar-brand sidebar-gone-hide">{{ config('app.name', 'MakanTime') }}</a>
     <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
     <form class="form-inline ml-auto">
         <!-- <ul class="navbar-nav">
