@@ -13,24 +13,28 @@
                 <div class="buttons">
                     <a href="{{ route('group.create') }}" class="btn btn-primary float-right">New Group</a>
                 </div>
-                <table class="table table-responsive table-hover w-100 d-block d-md-table">
+                <table class="table table-responsive table-striped w-100 d-block d-md-table">
                     <thead>
                         <tr>
                             <th scope="col">Group</th>
-                            <th scope="col">Role</th>
-                            <th scope="col">Member</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($groupUsers as $groupUser)
                         <tr>
-                            <td><a href="{{ route('group.view', ['group' => $groupUser->group->id]) }}">{{ $groupUser->group->name }}</a></td>
-                            @if($groupUser->is_admin)
-                            <td><span class="badge badge-pill badge-primary">Admin</span></td>
-                            @else
-                            <td><span class="badge badge-pill badge-secondary">Member</span></td>
-                            @endif
-                            <td>{{ count($groupUser->group->groupUsers) }}</td>
+                            <td>
+                                <a href="{{ route('group.show', ['group' => $groupUser->group->id]) }}">{{ $groupUser->group->name }}</a>
+                                @if($groupUser->is_admin)
+                                    <span class="badge badge-pill badge-secondary float-right">Admin</span>
+                                @endif
+                                <br>
+                                @if($numberOfMembers = count($groupUser->group->groupUsers) > 1)
+                                    {{ count($groupUser->group->groupUsers) }} members 
+                                @else
+                                    1 member
+                                @endif
+                                <div class="bullet"></div> Created {{ $groupUser->group->created_at->diffForHumans() }}
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

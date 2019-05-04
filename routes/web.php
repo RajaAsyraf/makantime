@@ -25,5 +25,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/group', ['as' => 'group.index', 'uses' => 'GroupController@index']);
     Route::get('/group/create', ['as' => 'group.create', 'uses' => 'GroupController@create']);
     Route::post('/group/store', ['as' => 'group.store', 'uses' => 'GroupController@store']);
-    Route::get('/group/{group}', ['as' => 'group.view', 'uses' => 'GroupController@view']);
+    Route::get('/group/{group}', ['as' => 'group.show', 'uses' => 'GroupController@show']);
 });

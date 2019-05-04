@@ -67,7 +67,7 @@ class GroupController extends Controller
      * 
      * @return view
      */
-    public function view(Group $group)
+    public function show(Group $group)
     {
         $isGroupAdmin = false;
         $groupAdmins = $group->getAdmins()->get();
@@ -77,6 +77,6 @@ class GroupController extends Controller
             }
         }
 
-        return view('group.view', compact('group', 'isGroupAdmin'));
+        return view('group.show', compact('group', 'isGroupAdmin'));
     }
 }
