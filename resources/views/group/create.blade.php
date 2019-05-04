@@ -7,6 +7,8 @@
     </div>
 
     <div class="section-body">
+        <h2 class="section-title">Tips nak letak nama geng</h2>
+        <p class="section-lead">Nama kena unique, jangan sama dengan orang lain.</p>
         <div class="card">
             <div class="card-body">
                 <form action="{{ route('group.store') }}" method="POST">
