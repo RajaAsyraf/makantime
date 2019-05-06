@@ -9,31 +9,33 @@
     <div class="section-body">
         <div class="card">
             <div class="card-body">
-                @if($isGroupAdmin)
-                <div class="buttons">
-                    <a href="{{ route('group.create') }}" class="btn btn-primary float-right">Invite</a>
+                <div class="list-group">
+                    @foreach($group->groupUsers as $groupUser)
+                    <span class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ $groupUser->user->name }}</h5>
+                            <small class="text-muted"></small>
+                        </div>
+                        @if($groupUser->is_admin)
+                            <span class="badge badge-pill badge-primary float-right">Admin</span>
+                        @elseif($groupUser->user->id == Auth::user()->id)
+                            <span class="badge badge-pill badge-success float-right">It's you</span>
+                        @endif
+                        <p class="mb-1">{{ $groupUser->user->email }}</p>
+                        <small class="text-muted">Joined this group {{ $groupUser->updated_at->diffForHumans() }}</small>
+                    </span>
+                    @endforeach
+                    @if($isGroupAdmin)
+                        <a href="{{ route('group.create') }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1"><span class="fa fa-plus"></span>&nbsp;Add members</h5>
+                            <small class="text-muted"></small>
+                            </div>
+                            <p class="mb-1">This group has {{ count($group->groupUsers) }} active members.</p>
+                            <small class="text-muted">Add more members to this group. Invitation to this group will be sent through email.</small>
+                        </a>
+                    @endif
                 </div>
-                @endif
-                <table class="table table-responsive w-100 d-block d-md-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Role</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($group->groupUsers as $groupUser)
-                        <tr>
-                            <td>{{ $groupUser->user->name }}</td>
-                            @if($groupUser->is_admin)
-                            <td><span class="badge badge-pill badge-primary">Admin</span></td>
-                            @else
-                            <td><span class="badge badge-pill badge-secondary">Member</span></td>
-                            @endif
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
