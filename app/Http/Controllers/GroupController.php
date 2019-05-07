@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Group;
 use App\GroupUser;
 use Illuminate\Http\Request;
+use App\GroupMemberInvitation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -101,6 +103,30 @@ class GroupController extends Controller
         $validatedData = $request->validate([
             'email' => 'required|max:255|email',
         ]);
-        dd($validatedData);
+        $email = $validatedData['email'];
+        
+        $existingUser = User::where('email', $email)->first();
+        
+        if ($existingUser) {
+            $exitingMember = $group->groupUsers()->where('user_id', $existingUser->id)->first();
+            if ($exitingMember) {
+                // TODO: return withErrors
+                return back()->withInput();
+            }
+            $userId = $existingUser->id;
+            $email = NULL;
+        } else {
+            $userId = NULL;
+        }
+
+        $groupInvitation = GroupMemberInvitation::create([
+            'group_id' => $group->id,
+            'user_id' => $userId,
+            'email' => $email,
+            'created_by' => Auth::user()->id
+        ]);
+
+        // TODO: return with notification
+        return back();
     }
 }
