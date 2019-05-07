@@ -23,7 +23,7 @@
                                 @endif
                             </div>
                             <div class="col-4 col-md-1">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Create</button>
                             </div>
                         </div>
                     <div>

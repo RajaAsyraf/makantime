@@ -26,7 +26,7 @@
                     </span>
                     @endforeach
                     @if($isGroupAdmin)
-                        <a href="{{ route('group.create') }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <a href="{{ route('group.invite', ['group' => $group->id]) }}" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1"><span class="fa fa-plus"></span>&nbsp;Add members</h5>
                             <small class="text-muted"></small>

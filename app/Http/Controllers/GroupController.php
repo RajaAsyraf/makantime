@@ -18,7 +18,6 @@ class GroupController extends Controller
     public function index()
     {
         $groupUsers = Auth::user()->groupUsers()->get();
-        
         return view('group.index', compact('groupUsers'));
     }
 
@@ -39,7 +38,6 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        // validate request input
         $validatedData = $request->validate([
             'name' => 'required|unique:groups|max:50',
         ]);
@@ -56,7 +54,6 @@ class GroupController extends Controller
             ]);
         });
         // TODO: send response with notification for the request status
-
         return redirect()->route('group.index');
     }
 
@@ -76,7 +73,34 @@ class GroupController extends Controller
                 $isGroupAdmin = true;
             }
         }
-
         return view('group.show', compact('group', 'isGroupAdmin'));
+    }
+
+    /**
+     * Display selected group to add member page
+     * 
+     * @param Group $group
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function invite(Group $group)
+    {
+        return view('group.invite', compact('group'));
+    }
+
+    /**
+     * Store group invitation to add member. Email will be sent to member invited.
+     * 
+     * @param Request $request
+     * @param Group $group
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function storeInvitation(Request $request, Group $group)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|max:255|email',
+        ]);
+        dd($validatedData);
     }
 }
