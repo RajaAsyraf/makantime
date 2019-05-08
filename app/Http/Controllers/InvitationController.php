@@ -71,7 +71,15 @@ class InvitationController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->input();
-        dd($input);
+        $validatedData = $request->validate([
+            'group_id' => 'required|integer',
+            'restaurant_id' => 'required|integer',
+            'time' => 'required',
+            'date' => 'required',
+        ]);
+        return json_encode($validatedData);
+        // TODO: validate input
+        // TODO: return errors
+        // TODO: return notification
     }
 }

@@ -1812,8 +1812,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       fields: {
-        group: Number(0),
-        restaurant: Number(0)
+        group_id: Number(0),
+        restaurant_id: Number(0)
       },
       route: this.submitRoute,
       restaurants: Array
@@ -1825,7 +1825,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onGroupChange: function onGroupChange($event) {
-      this.fields.restaurant = 0;
+      this.fields.restaurant_id = 0;
       this.restaurants = this.groups[$event.target.selectedIndex - 1].restaurants;
     },
     successAlert: function successAlert() {
@@ -40890,8 +40890,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.fields.group,
-                      expression: "fields.group"
+                      value: _vm.fields.group_id,
+                      expression: "fields.group_id"
                     }
                   ],
                   staticClass: "form-control",
@@ -40909,7 +40909,7 @@ var render = function() {
                           })
                         _vm.$set(
                           _vm.fields,
-                          "group",
+                          "group_id",
                           $event.target.multiple
                             ? $$selectedVal
                             : $$selectedVal[0]
@@ -40948,8 +40948,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.fields.restaurant,
-                      expression: "fields.restaurant"
+                      value: _vm.fields.restaurant_id,
+                      expression: "fields.restaurant_id"
                     }
                   ],
                   staticClass: "form-control",
@@ -40970,7 +40970,7 @@ var render = function() {
                         })
                       _vm.$set(
                         _vm.fields,
-                        "restaurant",
+                        "restaurant_id",
                         $event.target.multiple
                           ? $$selectedVal
                           : $$selectedVal[0]
@@ -53237,7 +53237,8 @@ __webpack_require__.r(__webpack_exports__);
       errors: {},
       success: false,
       loading: false,
-      loaded: true
+      loaded: true,
+      response: ''
     };
   },
   methods: {
@@ -53249,6 +53250,7 @@ __webpack_require__.r(__webpack_exports__);
         this.loaded = false;
         this.errors = {};
         axios.post(this.route, this.fields).then(function (response) {
+          _this.response = response;
           _this.loading = false;
           _this.loaded = true;
           _this.success = true;
@@ -53260,7 +53262,11 @@ __webpack_require__.r(__webpack_exports__);
 
           if (error.response.status === 422) {
             _this.errors = error.response.data.errors || {};
-            return;
+            var errorMessages = '';
+            Object.values(_this.errors).forEach(function (value) {
+              errorMessages = errorMessages + '\n' + value[0];
+            });
+            return swal("Can't submit! Something is missing", errorMessages, "error");
           }
 
           _this.errorAlert();

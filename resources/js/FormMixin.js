@@ -7,6 +7,7 @@ export default {
             success: false,
             loading: false,
             loaded: true,
+            response: '',
         }
     },
     methods: {
@@ -16,6 +17,7 @@ export default {
                 this.loaded = false;
                 this.errors = {};
                 axios.post(this.route, this.fields).then(response => {
+                    this.response = response;
                     this.loading = false;
                     this.loaded = true;
                     this.success = true;
@@ -25,7 +27,11 @@ export default {
                     this.loaded = true;
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors || {};
-                        return;
+                        let errorMessages = '';
+                        Object.values(this.errors).forEach(value => {
+                            errorMessages = errorMessages + '\n' + value[0];
+                        });
+                        return swal("Can't submit! Something is missing", errorMessages, "error");
                     }
                     this.errorAlert();
                 });

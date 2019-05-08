@@ -8,14 +8,14 @@
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
                         <label>Group</label>
-                        <select class="form-control" name="group_id" id="group_id" v-model="fields.group" @change="onGroupChange($event)" required>
+                        <select class="form-control" name="group_id" id="group_id" v-model="fields.group_id" @change="onGroupChange($event)" required>
                             <option value="0" disabled>Select group</option>
                             <option v-for="group in groups" :key="group.id" :value="group.id">{{ group.name }}</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Restaurant</label>
-                        <select class="form-control" name="restaurant_id" id="restaurant_id" v-model="fields.restaurant" required>
+                        <select class="form-control" name="restaurant_id" id="restaurant_id" v-model="fields.restaurant_id" required>
                             <option value="0" disabled>Select restaurant</option>
                             <option v-for="resturant in restaurants" :key="resturant.id" :value="resturant.id">{{ resturant.name }}</option>
                         </select>
@@ -48,8 +48,8 @@ export default {
     data() {
         return {
             fields: {
-                group: Number(0),
-                restaurant: Number(0),
+                group_id: Number(0),
+                restaurant_id: Number(0),
             },
             route: this.submitRoute,
             restaurants: Array,
@@ -61,7 +61,7 @@ export default {
     },
     methods: {
         onGroupChange($event) {
-            this.fields.restaurant = 0;
+            this.fields.restaurant_id = 0;
             this.restaurants = this.groups[$event.target.selectedIndex - 1].restaurants;
         },
         successAlert() {
