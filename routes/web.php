@@ -20,8 +20,9 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/invitation', ['as' => 'invitation.show', 'uses' => 'InvitationController@show']);
-    Route::post('/invitation/{invitation}', ['as' => 'invitation.storeResponse', 'uses' => 'InvitationController@storeResponse']);
+    Route::post('/invitation/response/{invitation}', ['as' => 'invitation.storeResponse', 'uses' => 'InvitationController@storeResponse']);
     Route::get('/invitation/create', ['as' => 'invitation.create', 'uses' => 'InvitationController@create']);
+    Route::post('/invitation/store', ['as' => 'invitation.store', 'uses' => 'InvitationController@store']);
     Route::get('/group', ['as' => 'group.index', 'uses' => 'GroupController@index']);
     Route::get('/group/create', ['as' => 'group.create', 'uses' => 'GroupController@create']);
     Route::post('/group/store', ['as' => 'group.store', 'uses' => 'GroupController@store']);

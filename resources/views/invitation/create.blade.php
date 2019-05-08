@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
 <section class="section">
     <div class="section-header">
@@ -10,17 +11,7 @@
         <h2 class="section-title">Ajak makan untuk seminggu terus.</h2>
         <p class="section-lead">Jimat masa, masa itu TIME. TIME itu masa.</p>
             <div class="card">
-                <div class="card-header">
-                    <h4>Group</h4>
-                </div>
-                <div class="card-body">
-                    <h3>Restaurant</h3>
-                    <span class="badge badge-secondary">Date</span>
-                    <hr></hr>
-                    <p>
-                        <h6>Siapa ikut?</h6>
-                    </p>
-                </div>
+                <create-invitation :submit-route="'{{ route('invitation.store') }}'" :groups="{{ $groups }}"></create-invitation>
             </div>
     </div>
 </section>

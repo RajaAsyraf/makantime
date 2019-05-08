@@ -55,11 +55,10 @@ class InvitationController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $groups = $user->groupUsers()->where([
-            ['user_id', $user->id],
-            ['is_admin', true]
-        ])->get()->pluck('group')->unique();
-        
+        $groups = $user->groupUsers()
+                        ->where('is_admin', true)
+                        ->with('group.restaurants')
+                        ->get()->pluck('group');
         return view('invitation.create', compact('groups'));
     }
 
