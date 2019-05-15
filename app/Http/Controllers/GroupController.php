@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Group;
 use App\GroupUser;
+use App\Restaurant;
 use Illuminate\Http\Request;
 use App\GroupMemberInvitation;
 use Illuminate\Support\Facades\DB;
@@ -128,5 +129,15 @@ class GroupController extends Controller
 
         // TODO: return with notification
         return back();
+    }
+
+    /**
+     * Display suggest new restaurant for group page
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function createGroupRestaurant(Restaurant $restaurant)
+    {
+        dd('ok');
     }
 }
