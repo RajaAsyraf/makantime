@@ -136,8 +136,31 @@ class GroupController extends Controller
      * 
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function createGroupRestaurant(Restaurant $restaurant)
+    public function createGroupRestaurant(Group $group)
     {
-        dd('ok');
+        return view('group.createRestaurant', compact('group'));
+    }
+
+    /**
+     * Store suggested new restaurant for group
+     * 
+     * @param Request $request
+     * @param Group $group
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function storeGroupRestaurant(Request $request, Group $group)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+        ]);
+        DB::transaction(function () use ($validatedData, $group) {
+            $restaurant = Restaurant::create([
+                'name' => $validatedData['name'],
+                'created_by' => Auth::id()
+            ]);
+            $group->restaurants()->attach($restaurant);
+        });
+        return redirect()->route('group.show', ['group' => $group->id]);
     }
 }

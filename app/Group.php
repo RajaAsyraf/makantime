@@ -32,7 +32,7 @@ class Group extends Model
      */
     public function restaurants()
     {
-        return $this->belongsToMany('App\Restaurant');
+        return $this->belongsToMany('App\Restaurant')->withTimestamps();
     }
 
     /**
