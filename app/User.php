@@ -57,12 +57,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Many-to-many relationship with App\Group via pivot table group_user.
+     * Many-to-many relationship with App\GroupUser as groupUsers.
      *
-     * @return App\Group
+     * @return App\GroupUser
      */
-    public function groups()
+    public function groupUsers()
     {
-        return $this->belongsToMany('App\Group');
+        return $this->hasMany('App\GroupUser');
     }
 }

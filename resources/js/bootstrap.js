@@ -11,7 +11,7 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
+    // require('bootstrap'); // comment out this to avoid conflic with theme
 } catch (e) {}
 
 /**
