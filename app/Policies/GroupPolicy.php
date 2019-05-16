@@ -31,8 +31,8 @@ class GroupPolicy
      */
     public function leave(User $user, Group $group)
     {
-        $isGroupMember = $group->groupUsers()->where('user_id', $user->id)->exists();
-        $isGroupAdmin = $group->getAdmins()->where('user_id', $user->id)->exists();
+        $isGroupMember = $group->users()->where('user_id', $user->id)->exists();
+        $isGroupAdmin = $group->admins()->where('user_id', $user->id)->exists();
         return $isGroupMember && !$isGroupAdmin;
     }
 }

@@ -20,7 +20,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Auth::user()->groups()->withPivot('is_admin')->get();
+        $groups = Auth::user()->groups()->get();
         return view('group.index', compact('groups'));
     }
 
@@ -45,16 +45,13 @@ class GroupController extends Controller
             'name' => 'required|unique:groups|max:50',
         ]);
 
-        DB::transaction(function () use ($validatedData) {
+        $group = DB::transaction(function () use ($validatedData) {
             $group = Group::create([
                 'name' => $validatedData['name'],
                 'created_by' => Auth::user()->id,
             ]);
-            $groupUser = GroupUser::create([
-                'group_id' => $group->id,
-                'user_id' => Auth::user()->id,
-                'is_admin' => true
-            ]);
+            Auth::user()->groups()->attach($group);
+            return compact('group');
         });
         // TODO: send response with notification for the request status
         return redirect()->route('group.index');
@@ -69,13 +66,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        $isGroupAdmin = false;
-        $groupAdmins = $group->getAdmins()->get();
-        foreach ($groupAdmins as $groupAdmin) {
-            if ($groupAdmin->user_id == Auth::user()->id) {
-                $isGroupAdmin = true;
-            }
-        }
+        $isGroupAdmin = $group->admins()->where('user_id', Auth::id())->exists();
         return view('group.show', compact('group', 'isGroupAdmin'));
     }
 

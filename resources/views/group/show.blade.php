@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex w-100 justify-content-between">
-                    <h4 class="mb-1">Group Members&nbsp;<span class="badge badge-light">{{ count($group->groupUsers) }}</span></h4>
+                    <h4 class="mb-1">Group Members&nbsp;<span class="badge badge-light">{{ count($users = $group->users) }}</span></h4>
                 </div>
                 @if($isGroupAdmin)
                     <a href="{{ route('group.invite', ['group' => $group->id]) }}" class="btn btn-primary float-right"><span class="fa fa-plus"></span>&nbsp;Invite</a>
@@ -17,26 +17,26 @@
             </div>
             <div class="card-body">
                 <div class="list-group">
-                    @foreach($group->groupUsers as $groupUser)
+                    @foreach($users as $user)
                         <span class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">{{ $groupUser->user->name }}</h5>
+                                <h5 class="mb-1">{{ $user->name }}</h5>
                                 <small class="text-muted"></small>
                             </div>
-                            @if($groupUser->is_admin)
+                            @if($user->pivot->is_admin)
                                 <span class="badge badge-pill badge-secondary float-right">Admin</span>
-                            @elseif($groupUser->user->id == Auth::id() && Auth::user()->can('leave', $group))
+                            @elseif($user->id == Auth::id() && Auth::user()->can('leave', $group))
                                 <form action="{{ route('group.leave', ['group' => $group->id]) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-outline-danger float-right" name="leave" value="true">Leave</button>
                                 </form>
                             @endif
-                            <p class="mb-1">{{ $groupUser->user->email }}</p>
+                            <p class="mb-1">{{ $user->email }}</p>
                             <small class="text-muted">
-                                @if($groupUser->user->id == Auth::id())
+                                @if($user->id == Auth::id())
                                     <span class="badge badge-pill badge-light">It's you</span><div class="bullet"></div>
                                 @endif
-                                Joined this group {{ $groupUser->updated_at->diffForHumans() }}
+                                Joined this group {{ $user->pivot->updated_at->diffForHumans() }}
                             </small>
                         </span>
                     @endforeach
