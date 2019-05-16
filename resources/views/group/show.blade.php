@@ -25,11 +25,19 @@
                             </div>
                             @if($groupUser->is_admin)
                                 <span class="badge badge-pill badge-secondary float-right">Admin</span>
-                            @elseif($groupUser->user->id == Auth::id())
-                                <span class="badge badge-pill badge-light float-right">It's you</span>
+                            @elseif($groupUser->user->id == Auth::id() && Auth::user()->can('leave', $group))
+                                <form action="{{ route('group.leave', ['group' => $group->id]) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-danger float-right" name="leave" value="true">Leave</button>
+                                </form>
                             @endif
                             <p class="mb-1">{{ $groupUser->user->email }}</p>
-                            <small class="text-muted">Joined this group {{ $groupUser->updated_at->diffForHumans() }}</small>
+                            <small class="text-muted">
+                                @if($groupUser->user->id == Auth::id())
+                                    <span class="badge badge-pill badge-light">It's you</span><div class="bullet"></div>
+                                @endif
+                                Joined this group {{ $groupUser->updated_at->diffForHumans() }}
+                            </small>
                         </span>
                     @endforeach
                 </div>

@@ -87,7 +87,7 @@ class InvitationController extends Controller
         $restaurant = $group->restaurants()->where('restaurant_id', $validatedData['restaurant_id'])->first();
         $appointment_date = date('Y-m-d H:i:s', strtotime($validatedData['date'].$validatedData['time'].':00'));
         
-        DB::transaction(function () use ($validatedData, $group, $groupMembers, $restaurant, $appointment_date) {
+        $invitation = DB::transaction(function () use ($validatedData, $group, $groupMembers, $restaurant, $appointment_date) {
             $invitation = Invitation::create([
                 'group_id' => $group->id,
                 'restaurant_id' => $restaurant->id,
@@ -99,6 +99,7 @@ class InvitationController extends Controller
                     'user_id' => $member->id
                 ]);
             }
+            return $invitation;
         });
 
         // TODO: return errors

@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/group/create', ['as' => 'group.create', 'uses' => 'GroupController@create']);
     Route::post('/group/store', ['as' => 'group.store', 'uses' => 'GroupController@store']);
     Route::get('/group/{group}', ['as' => 'group.show', 'uses' => 'GroupController@show']);
+    Route::post('/group/{group}/leave', ['as' => 'group.leave', 'uses' => 'GroupController@leave']);
     Route::get('group/{group}/restaurant/create', ['as' => 'group.restaurant.create', 'uses' => 'GroupController@createGroupRestaurant']);
     Route::post('group/{group}/restaurant/store', ['as' => 'group.restaurant.store', 'uses' => 'GroupController@storeGroupRestaurant']);
     Route::post('group/{group}/restaurant/{restaurant}/remove', ['as' => 'group.restaurant.remove', 'uses' => 'GroupController@removeGroupRestaurant']);

@@ -181,4 +181,22 @@ class GroupController extends Controller
         $group->restaurants()->detach($restaurant);
         return back();
     }
+
+    /**
+     * Store leave request by user from group
+     * 
+     * @param Request $request
+     * @param Group $group
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function leave(Request $request, Group $group)
+    {
+        $validatedData = $request->validate([
+            'leave' => 'required'
+        ]);
+        $groupUser = $group->groupUsers()->where('user_id', Auth::id())->first();
+        $groupUser->delete();
+        return redirect()->route('group.index');
+    }
 }
