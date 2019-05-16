@@ -88,4 +88,14 @@ class Invitation extends Model
     {
         return $this->belongsTo('App\Restaurant');
     }
+
+    /**
+     * Return App\User that created the invitation
+     * 
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function creator()
+    {
+        return $this->belongsTo('App\User','created_by');
+    }
 }
