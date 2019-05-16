@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/group/{group}', ['as' => 'group.show', 'uses' => 'GroupController@show']);
     Route::get('group/{group}/restaurant/create', ['as' => 'group.restaurant.create', 'uses' => 'GroupController@createGroupRestaurant']);
     Route::post('group/{group}/restaurant/store', ['as' => 'group.restaurant.store', 'uses' => 'GroupController@storeGroupRestaurant']);
+    Route::post('group/{group}/restaurant/{restaurant}/remove', ['as' => 'group.restaurant.remove', 'uses' => 'GroupController@removeGroupRestaurant']);
     // TODO: Create middleware to check only for admin group can proceed with this routes
     Route::post('/invitation/store', ['as' => 'invitation.store', 'uses' => 'InvitationController@store']);
     Route::get('/group/{group}/invite', ['as' => 'group.invite', 'uses' => 'GroupController@invite']);

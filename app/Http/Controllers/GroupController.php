@@ -163,4 +163,22 @@ class GroupController extends Controller
         });
         return redirect()->route('group.show', ['group' => $group->id]);
     }
+
+    /**
+     * Remove restaurant from group by using detach from pivot table
+     * 
+     * @param Request $request
+     * @param Group $group
+     * @param Restaurant $restaurant
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function removeGroupRestaurant(Request $request, Group $group, Restaurant $restaurant)
+    {
+        $validatedData = $request->validate([
+            'remove' => 'required'
+        ]);
+        $group->restaurants()->detach($restaurant);
+        return back();
+    }
 }

@@ -5,76 +5,72 @@
     <div class="section-header">
         <h1>{{ $group->name }}</h1>
     </div>
-
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Group Members</h4>
+                <div class="d-flex w-100 justify-content-between">
+                    <h4 class="mb-1">Group Members&nbsp;<span class="badge badge-light">{{ count($group->groupUsers) }}</span></h4>
+                </div>
+                @if($isGroupAdmin)
+                    <a href="{{ route('group.invite', ['group' => $group->id]) }}" class="btn btn-primary float-right"><span class="fa fa-plus"></span>&nbsp;Invite</a>
+                @endif
             </div>
             <div class="card-body">
                 <div class="list-group">
                     @foreach($group->groupUsers as $groupUser)
-                    <span class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{ $groupUser->user->name }}</h5>
-                            <small class="text-muted"></small>
-                        </div>
-                        @if($groupUser->is_admin)
-                            <span class="badge badge-pill badge-secondary float-right">Admin</span>
-                        @elseif($groupUser->user->id == Auth::user()->id)
-                            <span class="badge badge-pill badge-light float-right">It's you</span>
-                        @endif
-                        <p class="mb-1">{{ $groupUser->user->email }}</p>
-                        <small class="text-muted">Joined this group {{ $groupUser->updated_at->diffForHumans() }}</small>
-                    </span>
-                    @endforeach
-                    @if($isGroupAdmin)
-                        <a href="{{ route('group.invite', ['group' => $group->id]) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <span class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Invite People</h5>
-                            <small class="text-muted"></small>
+                                <h5 class="mb-1">{{ $groupUser->user->name }}</h5>
+                                <small class="text-muted"></small>
                             </div>
-                            <span class="badge badge-pill badge-primary float-right"><span class="fa fa-plus"></span>&nbsp;Invite people</span>
-                            <small class="text-muted">This group has {{ count($group->groupUsers) }} active members.</small>
-                        </a>
-                    @endif
+                            @if($groupUser->is_admin)
+                                <span class="badge badge-pill badge-secondary float-right">Admin</span>
+                            @elseif($groupUser->user->id == Auth::id())
+                                <span class="badge badge-pill badge-light float-right">It's you</span>
+                            @endif
+                            <p class="mb-1">{{ $groupUser->user->email }}</p>
+                            <small class="text-muted">Joined this group {{ $groupUser->updated_at->diffForHumans() }}</small>
+                        </span>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
     <div class="card">
         <div class="card-header">
-            <h4>Suggested Restaurants</h4>
+            <div class="d-flex w-100 justify-content-between">
+                <h4 class="mb-1">Suggested Restaurants&nbsp;<span class="badge badge-light">{{ count($restaurants = $group->restaurants) }}</span></h4>
+            </div>
+            <a href="{{ route('group.restaurant.create', ['group' => $group->id]) }}" class="btn btn-primary float-right"><span class="fa fa-plus"></span>&nbsp;Add Restaurant</a>
         </div>
-        @if(count($restaurants = $group->restaurants) > 0)
-        <div class="card-body">
-            <div class="list-group">
-                @foreach($restaurants as $restaurant)
-                <span class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ $restaurant->name }}</h5>
-                        <small class="text-muted"></small>
-                    </div>
-                    <small class="text-muted">Added to this group {{ $restaurant->created_at->diffForHumans() }} by {{ $restaurant->creator->name }}</small>
-                </span>
-                @endforeach
-                <a href="{{ route('group.restaurant.create', ['group' => $group->id]) }}" class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Suggest other restaurant</h5>
-                    <small class="text-muted"></small>
-                    </div>
-                    <span class="badge badge-pill badge-primary float-right"><span class="fa fa-plus"></span>&nbsp;Add Restaurant</span>
-                    <small class="text-muted">This group has {{ count($restaurants) }} suggested restaurants.</small>
-                </a>
-        </div>
+        @if(count($restaurants) > 0)
+            <div class="card-body">
+                <div class="list-group">
+                    @foreach($restaurants as $restaurant)
+                        <span class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ $restaurant->name }}</h5>
+                                <small class="text-muted"></small>
+                                @if(Auth::user()->can('removeFromGroup', $restaurant) || $isGroupAdmin)
+                                    <form action="{{ route('group.restaurant.remove', ['group' => $group->id, 'restaurant' => $restaurant->id]) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-outline-danger float-right" name="remove" value="true">Remove</button>
+                                    </form>
+                                @endif
+                            </div>
+                            <small class="text-muted">Added to this group {{ $restaurant->created_at->diffForHumans() }} by {{ $restaurant->creator->name }}</small>
+                        </span>
+                    @endforeach
+                </div>
+            </div>
+        @else
+            <div class="card-body">
+                <div class="buttons text-center">
+                    <p>This group doesn't have any suggested restaurant. Suggets a restaurant now!</p>
+                    <a href="{{ route('group.restaurant.create', ['group' => $group->id]) }}" class="btn btn-primary">Add Restaurant</a>
+                </div>
+            </div>
+        @endif
     </div>
-    @else
-    <div class="card-body">
-        <div class="buttons text-center">
-            <p>You don't have any suggested restaurant. Suggets a restaurant now!</p>
-            <a href="{{ route('group.restaurant.create', ['group' => $group->id]) }}" class="btn btn-primary">Add Restaurant</a>
-        </div>
-    </div>
-    @endif
 </section>
 @endsection
