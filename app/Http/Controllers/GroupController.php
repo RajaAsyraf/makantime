@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Group;
-use App\GroupUser;
 use App\Restaurant;
 use Illuminate\Http\Request;
 use App\GroupMemberInvitation;
@@ -100,7 +99,7 @@ class GroupController extends Controller
         $existingUser = User::where('email', $email)->first();
         
         if ($existingUser) {
-            $exitingMember = $group->groupUsers()->where('user_id', $existingUser->id)->first();
+            $exitingMember = $group->users()->where('user_id', $existingUser->id)->first();
             if ($exitingMember) {
                 // TODO: return withErrors
                 return back()->withInput();
@@ -186,8 +185,7 @@ class GroupController extends Controller
         $validatedData = $request->validate([
             'leave' => 'required'
         ]);
-        $groupUser = $group->groupUsers()->where('user_id', Auth::id())->first();
-        $groupUser->delete();
+        $group->users()->detach(Auth::user());
         return redirect()->route('group.index');
     }
 }

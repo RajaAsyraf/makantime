@@ -39,16 +39,6 @@ class Group extends Model
                     ->withTimestamps();
     }
 
-   /**
-     * Many-to-many relationship with App\Restaurant via pivot table group_restaurant.
-     *
-     * @return App\Restaurant
-     */
-    public function restaurants()
-    {
-        return $this->belongsToMany('App\Restaurant')->withTimestamps();
-    }
-
     /**
      * Return all group admins
      * 
@@ -57,5 +47,15 @@ class Group extends Model
     public function admins()
     {
         return $this->users()->where('is_admin', true);
+    }
+
+   /**
+     * Many-to-many relationship with App\Restaurant via pivot table group_restaurant.
+     *
+     * @return App\Restaurant
+     */
+    public function restaurants()
+    {
+        return $this->belongsToMany('App\Restaurant')->withTimestamps();
     }
 }
