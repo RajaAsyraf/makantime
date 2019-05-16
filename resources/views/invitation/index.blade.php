@@ -9,49 +9,49 @@
     <div class="section-body">
         <h2 class="section-title">Jangan cakap kita orang tak ajak!</h2>
         <p class="section-lead">Kalau nak join makan, tekan la 'Jom' button tu.</p>
-        @foreach ($invitationResponses as $invitationResponse)
-            @if($invitationResponse->is_going)
+        @foreach ($invitations as $invitation)
+            @if ($invitation->pivot->is_going)
                 <div class="card card-success">
-            @elseif(!$invitationResponse->is_going && $invitationResponse->response_at)
+            @elseif (!$invitation->pivot->is_going && $invitation->pivot->response_at)
                 <div class="card card-danger">
             @else
                 <div class="card">
             @endif
                 <div class="card-header">
-                    @if($invitationResponse->is_going)
+                    @if ($invitation->pivot->is_going)
                         <span class="badge badge-success float-right">Ikut</span>
-                    @elseif(!$invitationResponse->is_going && $invitationResponse->response_at)
+                    @elseif (!$invitation->pivot->is_going && $invitation->pivot->response_at)
                         <span class="badge badge-danger float-right">Tak Ikut</span>
                     @endif
-                    &nbsp;<h4>{{ $invitationResponse->invitation->group->name }}</h4>
+                    &nbsp;<h4>{{ $invitation->group->name }}</h4>
                 </div>
                 <div class="card-body">
-                    <h3>{{ $invitationResponse->invitation->restaurant->name }}</h3>
-                    <span class="badge badge-secondary">{{ $invitationResponse->invitation->appointment_at->locale('ms_MY')->isoFormat('hh:mm A | dddd, DD MMM') }}</span>
+                    <h3>{{ $invitation->restaurant->name }}</h3>
+                    <span class="badge badge-secondary">{{ $invitation->appointment_at->locale('ms_MY')->isoFormat('hh:mm A | dddd, DD MMM') }}</span>
                     <hr></hr>
                     <p>
                         <h6>Siapa ikut?</h6>
-                        @if(count($usersGoing = $invitationResponse->invitation->usersInvited->where('is_going', true)) > 0)
-                            @foreach($usersGoing as $userGoing)
-                                <span class="badge badge-light">{{ $userGoing->user->name }}</span>
+                        @if (count($usersGoing = $invitation->usersGoing()->get()) > 0)
+                            @foreach ($usersGoing as $userGoing)
+                                <span class="badge badge-light">{{ $userGoing->name }}</span>
                             @endforeach
                         @else
                             Tak ada orang join lagi ni bro. Come on!   
                         @endif
                     </p>
-                    @if(count($usersNotGoing = $invitationResponse->invitation->usersInvited->where('is_going', false)->where('response_at', '!=',NULL)) > 0)
+                    @if (count($usersNotGoing = $invitation->usersNotGoing()->get()) > 0)
                         <p>
                             <h6>Tak nak ikut!</h6>
-                            @foreach($usersNotGoing as $userNotGoing)
-                                <span class="badge badge-light">{{ $userNotGoing->user->name }}</span>
+                            @foreach ($usersNotGoing as $userNotGoing)
+                                <span class="badge badge-light">{{ $userNotGoing->name }}</span>
                             @endforeach
                         </p>
                     @endif
-                    @if(count($usersNotResponse = $invitationResponse->invitation->usersInvited->where('response_at', NULL)) > 0)
+                    @if (count($usersNotResponse = $invitation->usersNotResponse()->get()) > 0)
                         <p>
                             <h6>Dah ajak</h6>
-                            @foreach($usersNotResponse as $userNotResponse)
-                                <span class="badge badge-light">{{ $userNotResponse->user->name }}</span>
+                            @foreach ($usersNotResponse as $userNotResponse)
+                                <span class="badge badge-light">{{ $userNotResponse->name }}</span>
                             @endforeach
                         </p>
                     @endif
@@ -71,11 +71,10 @@
                         </button>
                     </div> -->
                 </div>
-                @if(!$invitationResponse->response_at)
+                @if (!$invitation->pivot->response_at)
                     <div class="card-footer bg-whitesmoke">
-                        <form action="{{ route('invitation.storeResponse', $invitationResponse->invitation->id) }}" method="POST">
+                        <form action="{{ route('invitation.storeResponse', $invitation->id) }}" method="POST">
                             @csrf
-                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                             <input type="submit" class="btn btn-success" name="invitation_answer" value="Jom">
                             <input type="submit" class="btn btn-danger" name="invitation_answer" value="Tak Nak!">
                         </form>

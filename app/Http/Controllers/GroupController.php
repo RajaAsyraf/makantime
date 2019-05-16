@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Group;
 use App\Restaurant;
-use Illuminate\Http\Request;
 use App\GroupMemberInvitation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,6 +35,8 @@ class GroupController extends Controller
 
     /**
      * Store group creation
+     * 
+     * @param Request $request
      * 
      * @return view
      */
@@ -123,6 +125,8 @@ class GroupController extends Controller
 
     /**
      * Display suggest new restaurant for group page
+     * 
+     * @param Group $group
      * 
      * @return \Illuminate\Contracts\Support\Renderable
      */

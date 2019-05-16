@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="col-8 col-md-11">
                                 <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" required>
-                                @if($errors->has('name'))
+                                @if ($errors->has('name'))
                                     <div class="invalid-feedback">{{ $errors->first('name') }}</div>
                                 @endif
                             </div>

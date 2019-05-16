@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invitation extends Model
 {
+    use SoftDeletes;
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -26,13 +28,45 @@ class Invitation extends Model
     ];
 
     /**
-     * Has-many relationship with App\InvitationUser as usersInvited.
+     * Many-to-many relationship with App\User through pivot table invitation_user.
      *
-     * @return App\InvitationUser
+     * @return App\Invitation
      */
-    public function usersInvited()
+    public function users()
     {
-        return $this->hasMany('App\InvitationUser');
+        return $this->belongsToMany('App\User')
+                    ->withPivot(['is_going', 'response_at'])
+                    ->withTimestamps();
+    }
+
+    /**
+     * Filter users that respond going
+     * 
+     * @return Collection
+     */
+    public function usersGoing()
+    {
+        return $this->users()->wherePivot('is_going', 1);
+    }
+    
+    /**
+     * Filter users that respond not going
+     * 
+     * @return Collection
+     */
+    public function usersNotGoing()
+    {
+        return $this->users()->wherePivot('is_going', false)->wherePivot('response_at', '!=', NULL);
+    }
+
+    /**
+     * Filter users that never submit response yet
+     * 
+     * @return Collection
+     */
+    public function usersNotResponse()
+    {
+        return $this->users()->wherePivot('response_at', NULL);
     }
 
     /**

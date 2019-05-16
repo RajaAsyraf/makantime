@@ -49,13 +49,15 @@ class User extends Authenticatable
     ];
 
     /**
-     * Has-many relationship with App\InvitationUser as invitationResponses.
+     * Many-to-many relationship with App\Invitation through pivot table invitation_user.
      *
-     * @return App\InvitationUser
+     * @return App\Invitation
      */
-    public function invitationReponses()
+    public function invitations()
     {
-        return $this->hasMany('App\InvitationUser');
+        return $this->belongsToMany('App\Invitation')
+                    ->withPivot(['is_going', 'response_at'])
+                    ->withTimestamps();
     }
 
     /**
