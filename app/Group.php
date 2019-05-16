@@ -28,13 +28,15 @@ class Group extends Model
     ];
 
     /**
-     * Many-to-many relationship with App\GroupUser as groupUsers.
+     * Many-to-many relationship with App\User through pivot table group_user.
      *
-     * @return App\GroupUser
+     * @return App\User
      */
-    public function groupUsers()
+    public function users()
     {
-        return $this->hasMany('App\GroupUser');
+        return $this->belongsToMany('App\User')
+                    ->withPivot(['is_admin'])
+                    ->withTimestamps();
     }
 
    /**
@@ -52,8 +54,8 @@ class Group extends Model
      * 
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function getAdmins()
+    public function admins()
     {
-        return $this->groupUsers()->where('is_admin', true);
+        return $this->users()->where('is_admin', true);
     }
 }

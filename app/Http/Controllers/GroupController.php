@@ -20,8 +20,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groupUsers = Auth::user()->groupUsers()->get();
-        return view('group.index', compact('groupUsers'));
+        $groups = Auth::user()->groups()->withPivot('is_admin')->get();
+        return view('group.index', compact('groups'));
     }
 
     /**
