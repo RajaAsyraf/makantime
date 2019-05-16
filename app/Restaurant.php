@@ -12,6 +12,16 @@ class Restaurant extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name','created_by'
     ];
+
+    /**
+     * Return App\User that created the restaurant
+     * 
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function creator()
+    {
+        return $this->belongsTo('App\User','created_by');
+    }
 }

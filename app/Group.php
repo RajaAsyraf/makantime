@@ -12,16 +12,36 @@ class Group extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'name', 'created_by',
     ];
 
-   /**
-     * Many-to-many relationship with App\User via pivot table group_user.
+    /**
+     * Many-to-many relationship with App\GroupUser as groupUsers.
      *
-     * @return App\User
+     * @return App\GroupUser
      */
-    public function users()
+    public function groupUsers()
     {
-        return $this->belongsToMany('App\User');
+        return $this->hasMany('App\GroupUser');
+    }
+
+   /**
+     * Many-to-many relationship with App\Restaurant via pivot table group_restaurant.
+     *
+     * @return App\Restaurant
+     */
+    public function restaurants()
+    {
+        return $this->belongsToMany('App\Restaurant')->withTimestamps();
+    }
+
+    /**
+     * Return all group admins
+     * 
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function getAdmins()
+    {
+        return $this->groupUsers()->where('is_admin', true);
     }
 }

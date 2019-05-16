@@ -12,7 +12,7 @@ class Invitation extends Model
      * @var array
      */
     protected $fillable = [
-        'group_id', 'restaurant_id'
+        'group_id', 'restaurant_id','appointment_at'
     ];
 
     /**
