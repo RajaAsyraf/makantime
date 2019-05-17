@@ -42,7 +42,7 @@ class InvitationController extends Controller
             'is_going' => $isGoing,
             'response_at' => Carbon::now()
         ]);
-        return redirect()->route('invitation.show');
+        return redirect()->route('invitation.index');
     }
 
     /**

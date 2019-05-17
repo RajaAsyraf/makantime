@@ -10,9 +10,6 @@
         <div class="card">
             @if (count($groups) > 0)
                 <div class="card-body">
-                    <div class="buttons text-right">
-                        <a href="{{ route('group.create') }}" class="btn btn-primary">Create new group</a>
-                    </div>
                     <div class="list-group">
                         @foreach ($groups as $group)
                             <a href="{{ route('group.show', ['group' => $group->id]) }}" class="list-group-item list-group-item-action flex-column align-items-start">

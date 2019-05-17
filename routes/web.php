@@ -12,14 +12,17 @@
 */
 
 Route::get('/', function () {
-    return redirect()->route('home');
-});
-Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
+    return redirect()->route('invitation.index');
+})->name('/');
+
+Route::get('/home', function () {
+    return redirect()->route('/');
+})->name('home');
 
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/invitation', ['as' => 'invitation.show', 'uses' => 'InvitationController@show']);
+    Route::get('/invitation', ['as' => 'invitation.index', 'uses' => 'InvitationController@show']);
     Route::post('/invitation/response/{invitation}', ['as' => 'invitation.storeResponse', 'uses' => 'InvitationController@storeResponse']);
     Route::get('/invitation/create', ['as' => 'invitation.create', 'uses' => 'InvitationController@create']);
     Route::get('/group', ['as' => 'group.index', 'uses' => 'GroupController@index']);
