@@ -51,7 +51,7 @@ class GroupController extends Controller
                 'name' => $validatedData['name'],
                 'created_by' => Auth::user()->id,
             ]);
-            Auth::user()->groups()->attach($group);
+            Auth::user()->groups()->attach($group, ['is_admin' => true]);
             return compact('group');
         });
         // TODO: send response with notification for the request status
