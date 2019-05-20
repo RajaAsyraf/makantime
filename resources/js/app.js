@@ -8,8 +8,12 @@
 import './bootstrap';
 import 'jquery.nicescroll';
 import 'sweetalert';
+import Toasted from 'vue-toasted';
 
 window.Vue = require('vue');
+Vue.use(Toasted, {
+    iconPack: 'custom-class'
+});
 
 /**
  * The following block of code may be used to automatically register your
@@ -23,6 +27,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('create-invitation', require('./components/CreateInvitationComponent.vue').default);
+Vue.component('toastr-alert', require('./components/ToastrAlertComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

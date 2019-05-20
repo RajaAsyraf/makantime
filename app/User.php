@@ -71,4 +71,14 @@ class User extends Authenticatable
                     ->withPivot(['is_admin'])
                     ->withTimestamps();
     }
+
+    /**
+     * Get all group invitation as member
+     * 
+     * @return App\GroupMemberInvitation
+     */
+    public function groupMemberInvitations()
+    {
+        return $this->hasMany('App\GroupMemberInvitation');
+    }
 }

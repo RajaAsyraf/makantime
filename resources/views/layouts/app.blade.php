@@ -13,6 +13,12 @@
 
             <!-- Main Content -->
             <div class="main-content">
+                @if (Session::has('success'))
+                    <toastr-alert :alert-message="'{{ Session::get('success') }}'" :alert-type="'success'"></toastr-alert>
+                @endif
+                @if (Session::has('error'))
+                    <toastr-alert :alert-message="'{{ Session::get('error') }}'" :alert-type="'error'"></toastr-alert>
+                @endif
                 @yield('content')
             </div>
             @include('layouts.footer')

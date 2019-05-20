@@ -26,4 +26,24 @@ class GroupMemberInvitation extends Model
     protected $dates = [
         'created_at', 'updated_at', 'deleted_at'
     ];
+
+    /**
+     * Relationship with App\Group
+     * 
+     * @return App\Group
+     */
+    public function group()
+    {
+        return $this->belongsTo('App\Group');
+    }
+
+    /**
+     * Relationship with App\User to get inviter
+     * 
+     * @return App\User
+     */
+    public function inviter()
+    {
+        return $this->belongsTo('App\User','created_by');
+    }
 }

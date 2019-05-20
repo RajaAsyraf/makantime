@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "jquery.nicescroll": "^3.7.6",
-        "sweetalert": "^2.1.2"
+        "sweetalert": "^2.1.2",
+        "vue-toasted": "^1.1.27"
     }
 }

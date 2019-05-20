@@ -20,7 +20,8 @@ class GroupController extends Controller
     public function index()
     {
         $groups = Auth::user()->groups()->get();
-        return view('group.index', compact('groups'));
+        $groupMemberInvitations = Auth::user()->groupMemberInvitations()->get();
+        return view('group.index', compact('groups', 'groupMemberInvitations'));
     }
 
     /**
@@ -67,6 +68,11 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
+        $isGroupMember = $group->users()->where('user_id', Auth::id())->exists();
+        if (!$isGroupMember) {
+            session()->flash('error', 'You are not allowed to access to this group!');
+            return back();
+        }
         $isGroupAdmin = $group->admins()->where('user_id', Auth::id())->exists();
         return view('group.show', compact('group', 'isGroupAdmin'));
     }
