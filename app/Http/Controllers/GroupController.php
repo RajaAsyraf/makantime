@@ -46,16 +46,15 @@ class GroupController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|unique:groups|max:50',
         ]);
-
         $group = DB::transaction(function () use ($validatedData) {
             $group = Group::create([
                 'name' => $validatedData['name'],
                 'created_by' => Auth::user()->id,
             ]);
             Auth::user()->groups()->attach($group, ['is_admin' => true]);
-            return compact('group');
+            return $group;
         });
-        // TODO: send response with notification for the request status
+        session()->flash('success', 'Group ' . $group->name . ' is successfully created!');
         return redirect()->route('group.index');
     }
 
@@ -109,7 +108,7 @@ class GroupController extends Controller
         if ($existingUser) {
             $exitingMember = $group->users()->where('user_id', $existingUser->id)->first();
             if ($exitingMember) {
-                // TODO: return withErrors
+                session()->flash('error', 'User is already member of this group!');
                 return back()->withInput();
             }
             $userId = $existingUser->id;
@@ -125,7 +124,7 @@ class GroupController extends Controller
             'created_by' => Auth::user()->id
         ]);
 
-        // TODO: return with notification
+        session()->flash('success', 'Invitation to this group has been sent!');
         return back();
     }
 
@@ -154,13 +153,15 @@ class GroupController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
         ]);
-        DB::transaction(function () use ($validatedData, $group) {
+        $restaurant = DB::transaction(function () use ($validatedData, $group) {
             $restaurant = Restaurant::create([
                 'name' => $validatedData['name'],
                 'created_by' => Auth::id()
             ]);
             $group->restaurants()->attach($restaurant);
+            return $restaurant;
         });
+        session()->flash('success', 'Restaurant ' . $restaurant->name . ' has been added!');
         return redirect()->route('group.show', ['group' => $group->id]);
     }
 
@@ -179,6 +180,7 @@ class GroupController extends Controller
             'remove' => 'required'
         ]);
         $group->restaurants()->detach($restaurant);
+        session()->flash('success', $restaurant->name . ' has been removed!');
         return back();
     }
 
@@ -196,6 +198,7 @@ class GroupController extends Controller
             'leave' => 'required'
         ]);
         $group->users()->detach(Auth::user());
+        session()->flash('success', 'You have left group '. $group->name);
         return redirect()->route('group.index');
     }
 }
