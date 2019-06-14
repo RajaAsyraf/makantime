@@ -3,7 +3,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Weh {{ Auth::user()->name }}, makan mana?</h1>
+        <h1>Weh {{ Auth::user()->nickname }}, makan mana?</h1>
     </div>
 
     <div class="section-body">
